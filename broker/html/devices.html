@@ -1,0 +1,90 @@
+{{ define "devices" }}
+
+<!DOCTYPE html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Device list</title>
+<link href="./style.css" rel="stylesheet" type="text/css">
+
+<script>
+function windowHeight() {
+	var de = document.documentElement;
+	return self.innerHeight||(de && de.clientHeight)||document.body.clientHeight;
+}
+window.onload=window.onresize=function(){
+	var wh=windowHeight();
+	document.getElementById("xt-left").style.height = document.getElementById("xt-right").style.height;
+}
+</script>
+
+<meta http-equiv="refresh" content="5">
+</head>
+
+
+
+<body>
+
+<!-- left -->
+<div class="xt-center">
+<div id="xt-left" style="height: 603px;">
+    <div class="xt-menu">
+        <ul>
+            <li><a href="#" class="hover"><em class="one"></em>基础信息</a></li>
+        </ul>
+    </div>
+</div>
+<!-- right -->
+<div id="xt-right" style="height: 603px;">
+    <div class="xt-bt">MQTT Device List</div>
+
+    <div class="xt-table">
+        <table cellpadding="0" cellspacing="0" border="0" bgcolor="#dcdcdc" width="100%">
+            <tbody><tr>
+			<th>Seq</th>
+            <th>ClientID</th>
+			<th>Subscribe list</th>
+            <th>Create Time</th>
+            <th>Status</th>
+            </tr>
+			
+			{{range $index, $devinfo := .}}
+			{{if eq $devinfo.Odd 1}}
+            <tr>
+                <td>{{$index}}</td>
+                <td>{{$devinfo.ClientID}}</td>
+                <td>{{$devinfo.Sublist}}</td>
+                <td>{{$devinfo.CreateT}}</td>
+				
+				{{if eq $devinfo.Online 1}}
+				<td><a href="#" class="blue-xt">Online</a></td>
+				{{else}}
+				<td><a href="#" class="red-xt">Offline</a></td>
+				{{end}}
+            </tr>
+			{{else}}
+            <tr class="xt-bg">
+                <td>{{$index}}</td>
+                <td>{{$devinfo.ClientID}}</td>
+                <td>{{$devinfo.Sublist}}</td>
+                <td>{{$devinfo.CreateT}}</td>
+				
+                {{if eq $devinfo.Online 1}}
+				<td><a href="#" class="blue-xt">Online</a></td>
+				{{else}}
+				<td><a href="#" class="red-xt">Offline</a></td>
+				{{end}}
+            </tr>
+			{{end}}
+			{{end}}
+			
+			</tbody>
+		</table>
+    </div>
+</div>
+</div>
+
+
+</body>
+</html>
+
+{{ end }}
